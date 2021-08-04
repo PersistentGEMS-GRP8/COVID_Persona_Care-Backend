@@ -16,7 +16,7 @@ public abstract class Person {
 
 	private String name;
 	private String email;
-	private long contactNo;
+	private String contactNo;
 
 	public long getId() {
 		return id;
@@ -42,11 +42,11 @@ public abstract class Person {
 		this.email = email;
 	}
 
-	public long getContactNo() {
+	public String getContactNo() {
 		return contactNo;
 	}
 
-	public void setContactNo(long contactNo) {
+	public void setContactNo(String contactNo) {
 		this.contactNo = contactNo;
 	}
 
