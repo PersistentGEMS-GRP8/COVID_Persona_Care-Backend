@@ -3,6 +3,8 @@ package com.covidpersona.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +30,12 @@ public class AdminController {
 	 */
 
 	@PostMapping
-	public Admin addAdmin(@RequestBody Admin admin) {
+	public Admin addAdmin(@Valid @RequestBody Admin admin) {
 		return adminService.addAdmin(admin);
 	}
 
 	@PutMapping
-	public Admin updateManager(@RequestBody Admin admin) {
+	public Admin updateManager(@Valid @RequestBody Admin admin) {
 		return adminService.updateAdmin(admin);
 	}
 
