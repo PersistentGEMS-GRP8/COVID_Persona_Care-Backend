@@ -33,4 +33,9 @@ public class AdminService {
 	public List<Admin> getAllAdmin() {
 		return adminRepository.findAll();
 	}
+
+	public Admin getAdmin(long id) {
+		Admin admin = adminRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin", "id", id));
+		return admin;
+	}
 }

@@ -46,6 +46,11 @@ public class AdminController {
 	public List<Admin> getAllAdmin() {
 		return adminService.getAllAdmin();
 	}
+	
+	@GetMapping("/{id}")
+	public Admin getAdmin(@PathVariable long id) {
+		return adminService.getAdmin(id);
+	}
 
 	/*
 	 * Manage Hospitals
