@@ -1,8 +1,8 @@
 package com.covidpersona.service.auth;
 
 import com.covidpersona.entity.PersonaUser;
+import com.covidpersona.exception.InvalidDataException;
 import com.covidpersona.repository.UserRepository;
-import com.sun.media.sound.InvalidDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -2,11 +2,11 @@ package com.covidpersona.controller;
 
 import com.covidpersona.config.auth.JwtUtil;
 import com.covidpersona.entity.PersonaUser;
+import com.covidpersona.exception.InvalidDataException;
 import com.covidpersona.model.auth.AuthenticationRequest;
 import com.covidpersona.model.auth.AuthenticationResponce;
 import com.covidpersona.service.auth.CustomUserDetailsService;
 import com.covidpersona.service.auth.PersonaUserService;
-import com.sun.media.sound.InvalidDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
