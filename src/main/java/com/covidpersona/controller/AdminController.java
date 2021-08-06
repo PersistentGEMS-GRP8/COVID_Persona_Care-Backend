@@ -1,6 +1,5 @@
 package com.covidpersona.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -35,7 +34,7 @@ public class AdminController {
 	}
 
 	@PutMapping
-	public Admin updateManager(@Valid @RequestBody Admin admin) {
+	public Admin updateAdmin(@Valid @RequestBody Admin admin) {
 		return adminService.updateAdmin(admin);
 	}
 
@@ -48,62 +47,10 @@ public class AdminController {
 	public List<Admin> getAllAdmin() {
 		return adminService.getAllAdmin();
 	}
-	
+
 	@GetMapping("/{id}")
 	public Admin getAdmin(@PathVariable long id) {
 		return adminService.getAdmin(id);
-	}
-
-	/*
-	 * Manage Hospitals
-	 */
-
-	@PostMapping("/hospitals")
-	public void registerHospital() {
-
-	}
-
-	@GetMapping("/hospitals")
-	public List<String> getAllHospitals() {
-		return Arrays.asList("Hospital 1", "Hospital 2");
-	}
-
-	@GetMapping("/hospitals/{id}")
-	public String getHospitalById(@PathVariable long id) {
-		return "Hospital 1";
-	}
-
-	@PutMapping("/hospitals")
-	public void updateHospital() {
-
-	}
-
-	@DeleteMapping("/hospitals/{id}")
-	public void deleteHospital(@PathVariable("id") long hospitalId) {
-
-	}
-
-	/*
-	 * Manage Hospitals Admin
-	 */
-
-	@PostMapping("/hospital/{hid}/admin")
-	public String registerHospitalAdmin(@PathVariable("hid") long hospitalId) {
-		return "Hospital_ID: " + hospitalId;
-	}
-
-	@PutMapping("/hospital/admin")
-	public void updateHospitalAdmin() {
-
-	}
-
-	@DeleteMapping("hospital/admin/{id}")
-	public void deleteHospitalAdmin(@PathVariable("id") long hospitalAdminId) {
-
-	}
-
-	public void getHospitalAdmin() {
-
 	}
 
 }
