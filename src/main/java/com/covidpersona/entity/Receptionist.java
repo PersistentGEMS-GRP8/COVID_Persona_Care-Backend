@@ -5,14 +5,14 @@ import javax.persistence.Entity;
 @Entity
 public class Receptionist extends Person {
 	
-	private int rId;
+	private int hId;
 
-	public int getrId() {
-		return rId;
+	public int gethId() {
+		return hId;
 	}
 
-	public void setrId(int rId) {
-		this.rId = rId;
+	public void sethId(int hId) {
+		this.hId = hId;
 	}
 	
 }
