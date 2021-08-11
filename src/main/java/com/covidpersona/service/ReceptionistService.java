@@ -36,4 +36,8 @@ public class ReceptionistService {
 	public void deleteReceptionist(long id) {
 		receptionistRepository.deleteById(id);
 	}
+	
+	public List<Receptionist> getReceptionistsByHId(int hId){
+		return receptionistRepository.findByhId(hId);
+	}
 }

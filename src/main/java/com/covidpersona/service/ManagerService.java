@@ -36,5 +36,9 @@ public class ManagerService {
 	public void deleteManager(long id) {
 		managerRepository.deleteById(id);
 	}
+	
+	public List<Manager> getManagersByHId(int hId){
+		return managerRepository.findByhId(hId);
+	}
 
 }
