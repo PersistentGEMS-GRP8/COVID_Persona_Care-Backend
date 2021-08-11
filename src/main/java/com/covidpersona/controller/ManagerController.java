@@ -59,4 +59,9 @@ public class ManagerController {
 		managerService.deleteManager(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/getByHId/{hId}")
+	public List<Manager> getManagersByHId(@PathVariable int hId) {
+		return managerService.getManagersByHId(hId);
+	}
 }
