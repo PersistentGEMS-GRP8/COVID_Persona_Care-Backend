@@ -6,6 +6,7 @@ import com.covidpersona.service.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,6 +47,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/hospitalAdmins/**").hasRole("HOSPITALADMIN")
                 .antMatchers("/managers/**").hasRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/specializations/**").permitAll()
+                .antMatchers("/specializations/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/doctors/**").permitAll()
+                .antMatchers("/doctors").hasRole("MANAGER")
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/authenticate").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
