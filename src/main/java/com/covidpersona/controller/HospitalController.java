@@ -49,7 +49,7 @@ public class HospitalController {
 		return ResponseEntity.ok(savedHospital);
 	}
 
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseEntity<Hospital> updateHospital(@RequestBody Hospital hospital) {
 		Hospital updatedHospital = hospitalService.updateHospital(hospital);
 		return ResponseEntity.ok(updatedHospital);

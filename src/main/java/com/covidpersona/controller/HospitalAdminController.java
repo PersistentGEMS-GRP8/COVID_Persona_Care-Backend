@@ -50,7 +50,7 @@ public class HospitalAdminController {
 		return ResponseEntity.created(new URI("/hospitalAdmins/" + savedHospAdmin.getId())).body(savedHospAdmin);
 	}
 
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseEntity<HospitalAdmin> updateHospAdmin(@RequestBody HospitalAdmin hospAdmin) {
 		HospitalAdmin updatedHospAdmin = hospAdminService.updateHospAdmin(hospAdmin);
 		return ResponseEntity.ok(updatedHospAdmin);
