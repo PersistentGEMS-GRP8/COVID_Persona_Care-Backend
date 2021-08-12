@@ -44,8 +44,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/hospitalAdmins/**").hasRole("HOSPITALADMIN")
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/hospitals/**").hasRole("ADMIN")
+                .antMatchers("/hospitalAdmins/**").hasRole("ADMIN")
+//                .antMatchers("/hospitalAdmins/**").hasRole("HOSPITALADMIN")
                 .antMatchers("/managers/**").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/specializations/**").permitAll()
                 .antMatchers("/specializations/**").hasRole("ADMIN")
