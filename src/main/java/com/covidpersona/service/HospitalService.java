@@ -37,6 +37,8 @@ public class HospitalService {
 		hospitalRepository.deleteById(id);
 	}
 
-
+	public Hospital getHospitalByName(String name) {
+		return hospitalRepository.findByName(name);
+	}
 
 }
