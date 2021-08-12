@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.covidpersona.entity.Receptionist;
 import com.covidpersona.service.ReceptionistService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/receptionists")
 public class ReceptionistController {
@@ -58,6 +60,11 @@ public class ReceptionistController {
 	public ResponseEntity<?> deleteReceptionist(@PathVariable long id) {
 		receptionistService.deleteReceptionist(id);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/getByHId/{hId}")
+	public List<Receptionist> getReceptionistsByHId(@PathVariable int hId) {
+		return receptionistService.getReceptionistsByHId(hId);
 	}
 
 }
