@@ -1,6 +1,5 @@
 package com.covidpersona.controller;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
@@ -18,16 +17,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covidpersona.dto.RegisterRequestDto;
 import com.covidpersona.entity.HospitalAdmin;
 import com.covidpersona.service.HospitalAdminService;
+import com.covidpersona.service.auth.PersonaUserService;
+
+import lombok.AllArgsConstructor;
+
 
 @CrossOrigin(origins={ "http://localhost:3000" })
 @RestController
 @RequestMapping("/hospitalAdmins")
+@AllArgsConstructor
 public class HospitalAdminController {
+	
 
 	@Autowired
-	private HospitalAdminService hospAdminService;
+//	private HospitalAdminService hospAdminService;
+//	private PersonaUserService personaUserService;
+	private final HospitalAdminService hospAdminService;
+	private final PersonaUserService personaUserService;
+
 
 	@GetMapping
 	public List<HospitalAdmin> getHospAdmins() {
@@ -43,11 +53,12 @@ public class HospitalAdminController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
+	
+	
 	@PostMapping
-	public ResponseEntity<HospitalAdmin> addHospAdmin(@RequestBody HospitalAdmin hospAdmin) throws URISyntaxException {
-		HospitalAdmin savedHospAdmin = hospAdminService.addHospAdmin(hospAdmin);
-		return ResponseEntity.created(new URI("/hospitalAdmins/" + savedHospAdmin.getId())).body(savedHospAdmin);
+	public long addHospAdmin(@RequestBody RegisterRequestDto hospAdmin) throws URISyntaxException {
+		HospitalAdmin hAdmin = (HospitalAdmin) hospAdmin.getPerson();
+		return personaUserService.RegisterPersonaUser(hospAdmin.getPersonaUser(),hAdmin);
 	}
 
 	@PutMapping("/{id}")
