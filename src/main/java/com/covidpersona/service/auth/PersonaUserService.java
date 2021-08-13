@@ -4,6 +4,7 @@ import com.covidpersona.entity.Admin;
 import com.covidpersona.entity.Doctor;
 import com.covidpersona.entity.HospitalAdmin;
 import com.covidpersona.entity.Manager;
+import com.covidpersona.entity.Patient;
 import com.covidpersona.entity.Person;
 import com.covidpersona.entity.PersonaUser;
 import com.covidpersona.exception.InvalidDataException;
@@ -11,6 +12,7 @@ import com.covidpersona.repository.AdminRepository;
 import com.covidpersona.repository.DoctorRepository;
 import com.covidpersona.repository.HospitalAdminRepository;
 import com.covidpersona.repository.ManagerRepository;
+import com.covidpersona.repository.PatientRepository;
 import com.covidpersona.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ public class PersonaUserService {
 	private final HospitalAdminRepository hospitalAdminRepository;
 	private final ManagerRepository managerRepository;
 	private final DoctorRepository doctorRepository;
+	private final PatientRepository patientRepository;
 
 	public long RegisterPersonaUser(PersonaUser personaUser, Person person) throws InvalidDataException {
 		if (personaUser.getUsername().isEmpty() || personaUser.getUsername() == null) {
@@ -64,6 +67,11 @@ public class PersonaUserService {
 		if (person instanceof Doctor) {
 			Doctor doctor = (Doctor) person;
 			return doctorRepository.save(doctor).getId();
+		}
+		
+		if(person instanceof Patient) {
+			Patient patient = (Patient) person;
+			return patientRepository.save(patient).getId();
 		}
 
 		return userRepository.save(personaUser).getId();

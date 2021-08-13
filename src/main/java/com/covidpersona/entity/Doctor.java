@@ -1,6 +1,7 @@
 package com.covidpersona.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
 import com.covidpersona.dto.DoctorDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.covidpersona.entity.Appointment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,4 +49,8 @@ public class Doctor extends Person {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "doctors")
 //	@JsonIgnore
 	private Set<Hospital> hospitals = new HashSet<>();
+
+	@OneToMany(mappedBy = "doctor")
+	private List<Appointment> appointments;
+
 }
