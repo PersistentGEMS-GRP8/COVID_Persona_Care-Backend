@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covidpersona.dto.RegisterRequestDto;
 import com.covidpersona.entity.Manager;
 import com.covidpersona.service.ManagerService;
+import com.covidpersona.service.auth.PersonaUserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,6 +30,9 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService managerService;
+	
+	@Autowired
+	private PersonaUserService personaUserService;
 
 	@GetMapping
 	public List<Manager> getManagers() {
@@ -65,5 +70,10 @@ public class ManagerController {
 	@GetMapping("/getByHId/{hId}")
 	public List<Manager> getManagersByHId(@PathVariable int hId) {
 		return managerService.getManagersByHId(hId);
+	}
+	
+	@PostMapping("/register")
+	public long registerManager(@RequestBody RegisterRequestDto dto) {
+		return personaUserService.RegisterPersonaUser(dto.getPersonaUser(), dto.getPerson());
 	}
 }

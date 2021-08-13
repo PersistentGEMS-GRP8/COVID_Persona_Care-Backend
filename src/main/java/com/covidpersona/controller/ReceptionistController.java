@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covidpersona.dto.RegisterRequestDto;
 import com.covidpersona.entity.Receptionist;
 import com.covidpersona.service.ReceptionistService;
+import com.covidpersona.service.auth.PersonaUserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,6 +30,9 @@ public class ReceptionistController {
 	
 	@Autowired
 	private ReceptionistService receptionistService;
+	
+	@Autowired
+	private PersonaUserService personaUserService;
 	
 	@GetMapping
 	public List<Receptionist> getReceptionist() {
@@ -67,4 +72,8 @@ public class ReceptionistController {
 		return receptionistService.getReceptionistsByHId(hId);
 	}
 
+	@PostMapping("/register")
+	public long registerReceptionist(@RequestBody RegisterRequestDto dto) {
+		return personaUserService.RegisterPersonaUser(dto.getPersonaUser(), dto.getPerson());
+	}
 }
