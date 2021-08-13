@@ -11,7 +11,7 @@ import com.covidpersona.exception.ResourceNotFoundException;
 import com.covidpersona.repository.DoctorRepository;
 
 @Service
-public class DoctorService {
+public class DoctorService extends PersonService<Doctor> {
 	@Autowired
 	private DoctorRepository doctorRepository;
 
@@ -44,6 +44,12 @@ public class DoctorService {
 
 	public List<DoctorDto> getAllDoctorByHospital(int hosId) {
 		return doctorRepository.findAllWithSpecializationByHospital(hosId);
+	}
+
+	@Override
+	public Doctor getPersonByUserId(long id) {
+		return doctorRepository.findByUserId_Id(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", id));
 	}
 
 }

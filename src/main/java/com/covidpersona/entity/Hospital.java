@@ -25,14 +25,14 @@ public class Hospital {
 	private int hId;
 
 	@NotBlank
-	@Column(nullable = false, unique = true)
+	@Column(name = "h_name", nullable = false, unique=true)
 	private String hName;
 	
 	@NotBlank
 	@Column(nullable = false)
 	private String location;
 	
-	@NotBlank
+	@Column(nullable = false)
 	private int noOfBeds;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

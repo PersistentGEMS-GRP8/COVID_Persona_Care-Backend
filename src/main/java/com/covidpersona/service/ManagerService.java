@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.covidpersona.entity.Manager;
+import com.covidpersona.exception.ResourceNotFoundException;
 import com.covidpersona.repository.ManagerRepository;
 
 @Service
-public class ManagerService {
+public class ManagerService extends PersonService<Manager> {
 
 	@Autowired
 	private ManagerRepository managerRepository;
@@ -36,9 +37,15 @@ public class ManagerService {
 	public void deleteManager(long id) {
 		managerRepository.deleteById(id);
 	}
-	
-	public List<Manager> getManagersByHId(int hId){
+
+	public List<Manager> getManagersByHId(int hId) {
 		return managerRepository.findByhId(hId);
+	}
+
+	@Override
+	public Manager getPersonByUserId(long id) {
+		return managerRepository.findByUserId_Id(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager", "user_id", id));
 	}
 
 }

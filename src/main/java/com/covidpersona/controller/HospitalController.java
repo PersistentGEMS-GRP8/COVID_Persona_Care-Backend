@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.covidpersona.entity.Hospital;
 import com.covidpersona.service.HospitalService;
 
-@CrossOrigin(origins={ "http://localhost:3000" })
+//@CrossOrigin(origins={ "http://localhost:3000" })
 @RestController
 @RequestMapping("/hospitals")
+@CrossOrigin("http://localhost:3000")
 public class HospitalController {
 	
 	@Autowired
@@ -61,4 +63,14 @@ public class HospitalController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping("/search")
+	public Hospital getHospitalsByName(@RequestParam String name) {
+		return hospitalService.getHospitalByName(name);
+	
+	}
+	@PutMapping("/manage_beds")
+	public ResponseEntity<Hospital> manageBeds(@RequestParam int hId,@RequestParam int beds) {
+		Hospital updatedHospital = hospitalService.updateBeds(hId,beds);
+		return ResponseEntity.ok(updatedHospital);
+	}
 }

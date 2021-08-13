@@ -2,7 +2,9 @@ package com.covidpersona.entity;
 
 import javax.persistence.Entity;
 
-@Entity
-public class Admin extends Person {
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
+@Entity
+//@JsonTypeName("admin")
+public class Admin extends Person {
 }

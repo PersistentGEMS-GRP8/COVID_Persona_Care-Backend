@@ -33,7 +33,7 @@ public class ManagerRegistrationController {
 		System.out.println(managerRegDTO);
 		managerService.addManager(managerRegDTO.getManager());
 		PersonaUser personaUser = managerRegDTO.getPersonaUser();
-		personaUserService.RegisterPersonaUser(personaUser.getUsername(),personaUser.getPassword(),personaUser.getRole());
+		personaUserService.RegisterPersonaUser(managerRegDTO.getPersonaUser(), managerRegDTO.getManager());
 		return ResponseEntity.ok().build();
 	}
 }
