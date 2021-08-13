@@ -48,6 +48,16 @@ public class HospitalService {
 //	}
 
 	
+	public Hospital getHospitalByName(String name) {
+		return hospitalRepository.findByName(name);
+	}
+
+	public Hospital updateBeds(int hId,int beds) {
+		Hospital previous= hospitalRepository.findById(hId).get();
+		previous.setNoOfBeds(beds);
+		Hospital updatedHospital = hospitalRepository.save(previous);
+		return updatedHospital;
+	}
 }
 
 
