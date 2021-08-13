@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covidpersona.dto.RegisterRequestDto;
 import com.covidpersona.entity.PersonaUser;
 import com.covidpersona.entity.ReceptionistRegistrationDTO;
 import com.covidpersona.service.ReceptionistService;
@@ -21,19 +22,24 @@ import com.covidpersona.service.auth.PersonaUserService;
 @RequestMapping("/receptionists")
 public class ReceptionistRegistrationController {
 
-	@Autowired
-	private ReceptionistService receptionistService;
+//	@Autowired
+//	private ReceptionistService receptionistService;
 
 	@Autowired
 	private PersonaUserService personaUserService;
 
-	@Transactional
+//	@Transactional
+//	@PostMapping("/register")
+//	public ResponseEntity<?> registerManager(@RequestBody ReceptionistRegistrationDTO receptionistRegDTO) {
+//		System.out.println(receptionistRegDTO);
+//		receptionistService.addReceptionist(receptionistRegDTO.getReceptionist());
+//		PersonaUser personaUser = receptionistRegDTO.getPersonaUser();
+////		personaUserService.RegisterPersonaUser(personaUser.getUsername(),personaUser.getPassword(),personaUser.getRole());
+//		return ResponseEntity.ok().build();
+//	}
+	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerManager(@RequestBody ReceptionistRegistrationDTO receptionistRegDTO) {
-		System.out.println(receptionistRegDTO);
-		receptionistService.addReceptionist(receptionistRegDTO.getReceptionist());
-		PersonaUser personaUser = receptionistRegDTO.getPersonaUser();
-//		personaUserService.RegisterPersonaUser(personaUser.getUsername(),personaUser.getPassword(),personaUser.getRole());
-		return ResponseEntity.ok().build();
+	public long registerManager(@RequestBody RegisterRequestDto dto) {
+		return personaUserService.RegisterPersonaUser(dto.getPersonaUser(), dto.getPerson());
 	}
 }
