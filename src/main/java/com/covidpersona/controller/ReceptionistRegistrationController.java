@@ -33,7 +33,7 @@ public class ReceptionistRegistrationController {
 		System.out.println(receptionistRegDTO);
 		receptionistService.addReceptionist(receptionistRegDTO.getReceptionist());
 		PersonaUser personaUser = receptionistRegDTO.getPersonaUser();
-		personaUserService.RegisterPersonaUser(personaUser.getUsername(),personaUser.getPassword(),personaUser.getRole());
+//		personaUserService.RegisterPersonaUser(personaUser.getUsername(),personaUser.getPassword(),personaUser.getRole());
 		return ResponseEntity.ok().build();
 	}
 }

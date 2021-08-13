@@ -11,10 +11,10 @@ import com.covidpersona.repository.HospitalRepository;
 
 @Service
 public class HospitalService {
-	
+
 	@Autowired
 	private HospitalRepository hospitalRepository;
-	
+
 	public List<Hospital> getHospitals() {
 		return hospitalRepository.findAll();
 	}
@@ -36,7 +36,5 @@ public class HospitalService {
 	public void deleteHospital(int id) {
 		hospitalRepository.deleteById(id);
 	}
-
-
 
 }

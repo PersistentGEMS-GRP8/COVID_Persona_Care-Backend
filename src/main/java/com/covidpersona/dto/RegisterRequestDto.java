@@ -1,6 +1,7 @@
-package com.covidpersona.model.auth;
+package com.covidpersona.dto;
 
 import com.covidpersona.entity.Person;
+import com.covidpersona.entity.PersonaUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +10,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationResponce {
-    private String token;
-    private Person person;
+@NoArgsConstructor
+public class RegisterRequestDto {
+	private PersonaUser personaUser;
+	private Person person;
 }
