@@ -67,4 +67,9 @@ public class HospitalController {
 		return hospitalService.getHospitalByName(name);
 	
 	}
+	@PutMapping("/manage_beds")
+	public ResponseEntity<Hospital> manageBeds(@RequestParam int hId,@RequestParam int beds) {
+		Hospital updatedHospital = hospitalService.updateBeds(hId,beds);
+		return ResponseEntity.ok(updatedHospital);
+	}
 }
