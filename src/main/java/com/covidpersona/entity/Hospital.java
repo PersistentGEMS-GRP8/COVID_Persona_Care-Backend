@@ -32,7 +32,7 @@ public class Hospital {
 	@Column(nullable = false)
 	private String location;
 	
-	@NotBlank
+	//@NotBlank
 	private int noOfBeds;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
