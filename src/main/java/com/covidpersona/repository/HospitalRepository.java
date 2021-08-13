@@ -10,7 +10,7 @@ import com.covidpersona.entity.Hospital;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Integer>{
 	
-	 @Query("SELECT p FROM Hospital p WHERE LOWER(p.hName) = LOWER(:hName)")
+	@Query("SELECT p FROM Hospital p WHERE LOWER(p.hName) = LOWER(:hName)")
 	Hospital findHospitalByHName(@Param("hName") String hName);
 
 	@Query(value = "SELECT * FROM Hospital WHERE h_name= ?1", nativeQuery = true)
