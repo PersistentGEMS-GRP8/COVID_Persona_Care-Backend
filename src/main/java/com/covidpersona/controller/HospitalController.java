@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.covidpersona.entity.Hospital;
 import com.covidpersona.service.HospitalService;
 
-@CrossOrigin(origins={ "http://localhost:3000" })
+//@CrossOrigin(origins={ "http://localhost:3000" })
 @RestController
 @RequestMapping("/hospitals")
 @CrossOrigin("http://localhost:3000")

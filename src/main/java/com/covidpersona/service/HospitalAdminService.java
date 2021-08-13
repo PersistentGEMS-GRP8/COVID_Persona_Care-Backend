@@ -1,6 +1,8 @@
 package com.covidpersona.service;
 
 import com.covidpersona.entity.HospitalAdmin;
+import com.covidpersona.exception.ResourceNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.covidpersona.repository.HospitalAdminRepository;
 
 @Service
-public class HospitalAdminService {
+public class HospitalAdminService extends PersonService<HospitalAdmin> {
 
 	@Autowired
 	private HospitalAdminRepository hospAdminRepository;
@@ -34,5 +36,11 @@ public class HospitalAdminService {
 
 	public void deleteHospAdmin(long id) {
 		hospAdminRepository.deleteById(id);
+	}
+
+	@Override
+	public HospitalAdmin getPersonByUserId(long id) {
+		return hospAdminRepository.findByUserId_Id(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Hospital Admin", "user_id", id));
 	}
 }
