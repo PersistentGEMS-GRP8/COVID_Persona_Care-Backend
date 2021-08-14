@@ -8,10 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @ToString
+@Getter
+@Setter
 public class HospitalVaccine {
 
 	@Id
@@ -19,13 +23,13 @@ public class HospitalVaccine {
 	private long id;
 	
 	@Column(nullable = false)
-	private long count;
+	private int count;
 	
 	@Column(nullable = false)
-	private long hospitalId;
+	private int hospitalId;
 	
 	@Column(nullable = false)
-	private long vaccineId;
+	private int vaccineId;
 	
 //	@ManyToOne
 //    @JoinColumn(name = "hospital_id")
