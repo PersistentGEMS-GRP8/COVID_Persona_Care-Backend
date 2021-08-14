@@ -20,7 +20,7 @@ public class SpecializationService {
 	}
 
 	public List<Specialization> getAllSpecialization() {
-		return specializationRepository.findAll();
+		return specializationRepository.findAllByOrderByIdAsc();
 	}
 
 	public Specialization getSpecialization(long id) {

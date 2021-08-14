@@ -63,7 +63,7 @@ public class DoctorController {
 	@PutMapping("/{hospitalId}/{doctorId}")
 	public void addDoctorToHospital(@PathVariable int hospitalId, @PathVariable long doctorId) {
 		Hospital hospital = hospitalService.getHospital(hospitalId)
-				.orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", hospitalId));
+				.orElseThrow(() -> new ResourceNotFoundException("Hospital", "id", hospitalId));
 		Doctor doctor = doctorService.getDoctorById(doctorId);
 
 		hospital.addDoctor(doctor);
