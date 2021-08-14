@@ -13,11 +13,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class Hospital {
 
 	@Id
@@ -32,7 +38,7 @@ public class Hospital {
 	@Column(nullable = false)
 	private String location;
 	
-	//@NotBlank
+	@Column(nullable = false)
 	private int noOfBeds;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -40,46 +46,6 @@ public class Hospital {
 			@JoinColumn(name = "doctor_id") })
 	@JsonIgnore
 	private Set<Doctor> doctors = new HashSet<>();
-
-	public int gethId() {
-		return hId;
-	}
-
-	public void sethId(int hId) {
-		this.hId = hId;
-	}
-
-	public String gethName() {
-		return hName;
-	}
-
-	public void sethName(String hName) {
-		this.hName = hName;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public int getNoOfBeds() {
-		return noOfBeds;
-	}
-
-	public void setNoOfBeds(int noOfBeds) {
-		this.noOfBeds = noOfBeds;
-	}
-
-	public Set<Doctor> getDoctors() {
-		return doctors;
-	}
-
-	public void setDoctors(Set<Doctor> doctors) {
-		this.doctors = doctors;
-	}
 	
 	public void addDoctor(Doctor doctor) {
 		this.doctors.add(doctor);
@@ -90,5 +56,8 @@ public class Hospital {
 		this.doctors.remove(doctor);
 		doctor.getHospitals().remove(this);
 	}
-
+//
+//	@OneToMany(mappedBy = "hospital")
+//    Set<HospitalVaccine> hospitalVaccines;
+//	
 }
