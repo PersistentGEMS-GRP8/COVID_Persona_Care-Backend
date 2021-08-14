@@ -10,7 +10,7 @@ import com.covidpersona.exception.ResourceNotFoundException;
 import com.covidpersona.repository.AdminRepository;
 
 @Service
-public class AdminService {
+public class AdminService extends PersonService<Admin> {
 
 	@Autowired
 	private AdminRepository adminRepository;
@@ -37,5 +37,11 @@ public class AdminService {
 	public Admin getAdmin(long id) {
 		Admin admin = adminRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin", "id", id));
 		return admin;
+	}
+
+	@Override
+	public Admin getPersonByUserId(long id) {
+		return adminRepository.findByUserId_Id(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Admin", "user_id", id));
 	}
 }

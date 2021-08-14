@@ -22,9 +22,9 @@ import com.covidpersona.entity.Hospital;
 import com.covidpersona.service.HospitalService;
 
 
+@CrossOrigin(origins={ "http://localhost:3000" })
 @RestController
 @RequestMapping("/hospitals")
-@CrossOrigin("http://localhost:3000")
 public class HospitalController {
 	
 	@Autowired
