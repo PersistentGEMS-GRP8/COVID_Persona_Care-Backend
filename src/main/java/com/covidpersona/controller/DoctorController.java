@@ -2,6 +2,7 @@ package com.covidpersona.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class DoctorController {
 	private final PersonaUserService personaUserService;
 
 	@PostMapping("/{specializationId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public long addDoctor(@PathVariable long specializationId, @RequestBody RegisterRequestDto doctor) {
 		Doctor doc = (Doctor) doctor.getPerson();
 		Specialization specialization = specializationService.getSpecialization(specializationId);
@@ -52,6 +54,7 @@ public class DoctorController {
 
 		if (hosId != null)
 			return doctorService.getAllDoctorByHospital(hosId);
+		
 		return doctorService.getAllDoctor();
 	}
 
@@ -59,8 +62,14 @@ public class DoctorController {
 	public Doctor getDoctorById(@PathVariable long id) {
 		return doctorService.getDoctorById(id);
 	}
+	
+	@GetMapping("/specialization")
+	public List<Doctor> getDoctorBySpecialization(@RequestParam Long id) {
+		return doctorService.getAllDoctorBySpecialization(id);
+	}
 
 	@PutMapping("/{hospitalId}/{doctorId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public void addDoctorToHospital(@PathVariable int hospitalId, @PathVariable long doctorId) {
 		Hospital hospital = hospitalService.getHospital(hospitalId)
 				.orElseThrow(() -> new ResourceNotFoundException("Hospital", "id", hospitalId));
@@ -72,6 +81,7 @@ public class DoctorController {
 	}
 
 	@DeleteMapping("/{hospitalId}/{doctorId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public void deleteDoctorToHospital(@PathVariable int hospitalId, @PathVariable long doctorId) {
 		Hospital hospital = hospitalService.getHospital(hospitalId)
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", hospitalId));
@@ -80,5 +90,11 @@ public class DoctorController {
 		hospital.removeDoctor(doctor);
 
 		hospitalService.updateHospital(hospital);
+	}
+	
+	@PutMapping
+	@PreAuthorize("hasRole('ROLE_DOCTOR')")
+	public Doctor updateDoctor(@RequestBody Doctor doctor) {		
+		return doctorService.updateDoctor(doctor);
 	}
 }

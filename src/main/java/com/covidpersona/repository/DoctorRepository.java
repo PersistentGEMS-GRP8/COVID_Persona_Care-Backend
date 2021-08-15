@@ -20,4 +20,9 @@ public interface DoctorRepository extends PersonRepository<Doctor> {
 
 	@Query(name = "find_doctor_hospital", nativeQuery = true)
 	List<DoctorDto> findAllWithSpecializationByHospital(@Param("hId") int hId);
+	
+	@Query(name = "find_doctor_hospital", nativeQuery = true)
+	List<DoctorDto> findAllWithSpecializationByHospital(@Param("hId") int hId, @Param("name") String name);
+	
+	List<Doctor> findBySpecialization_id(long id);
 }
