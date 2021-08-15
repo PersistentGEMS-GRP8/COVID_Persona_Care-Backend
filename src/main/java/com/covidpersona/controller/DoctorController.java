@@ -48,13 +48,15 @@ public class DoctorController {
 	@GetMapping
 	public List<DoctorDto> getAllDoctor(@RequestParam(required = false) String name,
 			@RequestParam(required = false) Integer hosId) {
-
+		if (name != null && hosId != null)
+			return doctorService.getAllDoctorByHospital(hosId, name);
+		
 		if (name != null)
 			return doctorService.getAllDoctorByNameLike(name);
 
 		if (hosId != null)
-			return doctorService.getAllDoctorByHospital(hosId);
-		
+			return doctorService.getAllDoctorByHospital(hosId, "");
+
 		return doctorService.getAllDoctor();
 	}
 
@@ -62,7 +64,7 @@ public class DoctorController {
 	public Doctor getDoctorById(@PathVariable long id) {
 		return doctorService.getDoctorById(id);
 	}
-	
+
 	@GetMapping("/specialization")
 	public List<Doctor> getDoctorBySpecialization(@RequestParam Long id) {
 		return doctorService.getAllDoctorBySpecialization(id);
@@ -91,10 +93,10 @@ public class DoctorController {
 
 		hospitalService.updateHospital(hospital);
 	}
-	
+
 	@PutMapping
 	@PreAuthorize("hasRole('ROLE_DOCTOR')")
-	public Doctor updateDoctor(@RequestBody Doctor doctor) {		
+	public Doctor updateDoctor(@RequestBody Doctor doctor) {
 		return doctorService.updateDoctor(doctor);
 	}
 }

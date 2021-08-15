@@ -42,8 +42,8 @@ public class DoctorService extends PersonService<Doctor> {
 		return doctorRepository.save(doctor);
 	}
 
-	public List<DoctorDto> getAllDoctorByHospital(int hosId) {
-		return doctorRepository.findAllWithSpecializationByHospital(hosId);
+	public List<DoctorDto> getAllDoctorByHospital(int hosId, String name) {
+		return doctorRepository.findAllWithSpecializationByHospital(hosId, name);
 	}
 
 	public List<Doctor> getAllDoctorBySpecialization(long specializationId) {
