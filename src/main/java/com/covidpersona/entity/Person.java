@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @Type(value = Admin.class, name = "admin"), @Type(value = HospitalAdmin.class, name = "hospitalAdmin"),
 		@Type(value = Manager.class, name = "manager"), @Type(value = Doctor.class, name = "doctor"),
-		@Type(value = Receptionist.class, name = "receptionist") })
+		@Type(value = Receptionist.class, name = "receptionist"), @Type(value = Patient.class, name = "patient") })
 public abstract class Person {
 
 	@Id
