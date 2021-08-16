@@ -51,6 +51,7 @@ public class Doctor extends Person {
 	private Set<Hospital> hospitals = new HashSet<>();
 
 	@OneToMany(mappedBy = "doctor")
+	@JsonIgnore
 	private List<Appointment> appointments;
 
 }
