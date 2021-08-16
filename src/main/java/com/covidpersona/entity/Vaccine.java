@@ -28,6 +28,4 @@ public class Vaccine {
 	@NotBlank
 	private String name;
 	
-//	@OneToMany(mappedBy = "vaccine")
-//    Set<HospitalVaccine> hospitalVaccines;
    }

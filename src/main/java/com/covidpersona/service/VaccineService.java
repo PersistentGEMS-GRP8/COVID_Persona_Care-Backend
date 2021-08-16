@@ -12,12 +12,12 @@ public class VaccineService {
 
 	@Autowired
 	private VaccineRepository vaccineRepo;
-	
-//	public List<Vaccine> getVaccineByHospId(int id){
-//		return vaccineRepo.getVaccineByHId(id);
-//	}
-	
-	public List<Vaccine> getVaccines(){
+
+	public Vaccine addVaccine(Vaccine vaccine) {
+		return vaccineRepo.save(vaccine);
+	}
+
+	public List<Vaccine> getVaccines() {
 		return vaccineRepo.findAll();
 	}
 }
