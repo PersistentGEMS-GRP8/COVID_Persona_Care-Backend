@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -49,11 +51,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hospitals/**").hasRole("ADMIN")
                 .antMatchers("/hospitalAdmins/**").hasRole("ADMIN")
 //                .antMatchers("/hospitalAdmins/**").hasRole("HOSPITALADMIN")
-                .antMatchers("/managers/**").hasRole("MANAGER")
+//                .antMatchers("/managers/**").hasRole("MANAGER")
+                .antMatchers("/managers/**").hasRole("HOSPITALADMIN")
+                .antMatchers("/receptionists/**").hasRole("HOSPITALADMIN")
                 .antMatchers(HttpMethod.GET, "/specializations/**").permitAll()
                 .antMatchers("/specializations/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/doctors/**").permitAll()
-                .antMatchers("/doctors").hasRole("MANAGER")
+//                .antMatchers("/doctors").hasRole("MANAGER")
                 .antMatchers("/hospitals/**").permitAll()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/authenticate").permitAll().anyRequest().authenticated()

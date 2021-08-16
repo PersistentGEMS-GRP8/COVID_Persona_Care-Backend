@@ -4,14 +4,18 @@ import com.covidpersona.entity.Admin;
 import com.covidpersona.entity.Doctor;
 import com.covidpersona.entity.HospitalAdmin;
 import com.covidpersona.entity.Manager;
+import com.covidpersona.entity.Patient;
 import com.covidpersona.entity.Person;
 import com.covidpersona.entity.PersonaUser;
+import com.covidpersona.entity.Receptionist;
 import com.covidpersona.exception.InvalidDataException;
-import com.covidpersona.repository.AdminRepository;
-import com.covidpersona.repository.DoctorRepository;
 import com.covidpersona.repository.HospitalAdminRepository;
 import com.covidpersona.repository.ManagerRepository;
+import com.covidpersona.repository.ReceptionistRepository;
+import com.covidpersona.repository.PatientRepository;
 import com.covidpersona.repository.UserRepository;
+import com.covidpersona.service.AdminService;
+import com.covidpersona.service.DoctorService;
 
 import lombok.AllArgsConstructor;
 
@@ -24,10 +28,12 @@ import org.springframework.stereotype.Service;
 public class PersonaUserService {
 
 	private final UserRepository userRepository;
-	private final AdminRepository adminRepository;
+	private final AdminService adminService;
 	private final HospitalAdminRepository hospitalAdminRepository;
 	private final ManagerRepository managerRepository;
-	private final DoctorRepository doctorRepository;
+	private final ReceptionistRepository receptionistRepository;
+	private final PatientRepository patientRepository;
+	private final DoctorService doctorService;
 
 	public long RegisterPersonaUser(PersonaUser personaUser, Person person) throws InvalidDataException {
 		if (personaUser.getUsername().isEmpty() || personaUser.getUsername() == null) {
@@ -38,17 +44,15 @@ public class PersonaUserService {
 		}
 		PersonaUser oldUser = userRepository.finddaoUserByUserName(personaUser.getUsername());
 		if (oldUser != null) {
-			throw new InvalidDataException("username already exists");
+			throw new InvalidDataException("Username already exists");
 		}
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        PersonaUser personaUser = new PersonaUser();
-//        personaUser.setUsername(username);
+
 		personaUser.setPassword(passwordEncoder.encode(personaUser.getPassword()));
-//        personaUser.setRole(role);
 		person.setUserId(personaUser);
 		if (person instanceof Admin) {
 			Admin admin = (Admin) person;
-			return adminRepository.save(admin).getId();
+			return adminService.addAdmin(admin);
 		}
 
 		if (person instanceof HospitalAdmin) {
@@ -63,7 +67,18 @@ public class PersonaUserService {
 
 		if (person instanceof Doctor) {
 			Doctor doctor = (Doctor) person;
-			return doctorRepository.save(doctor).getId();
+			return doctorService.addDoctor(doctor);
+		}
+
+		if (person instanceof Receptionist) {
+			Receptionist receptionist = (Receptionist) person;
+			return receptionistRepository.save(receptionist).getId();
+		}
+
+		if (person instanceof Patient) {
+			Patient patient = (Patient) person;
+			return patientRepository.save(patient).getId();
+
 		}
 
 		return userRepository.save(personaUser).getId();
