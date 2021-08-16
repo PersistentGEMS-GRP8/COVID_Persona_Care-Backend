@@ -19,5 +19,11 @@ public interface DoctorRepository extends PersonRepository<Doctor> {
 	List<DoctorDto> findAllWithSpecializationByNameLike(@Param("name") String name);
 
 	@Query(name = "find_doctor_hospital", nativeQuery = true)
-	List<DoctorDto> findAllWithSpecializationByHospital(@Param("hId") int hId);
+	List<DoctorDto> findAllWithSpecializationByHospital(@Param("hId") int hId, @Param("name") String name);
+
+	@Query("select new com.covidpersona.dto.DoctorDto(d.id, d.name, d.email, d.contactNo, s.id, s.name) from Doctor d, Specialization s where d.specialization = s and d.id = :id")
+	DoctorDto findDoctorWithSpecializationById(@Param("id") long id);
+
+	List<Doctor> findBySpecialization_id(long id);
+
 }
