@@ -92,7 +92,5 @@ public class Hospital {
 		doctor.getHospitals().remove(this);
 	}
 
-//	@OneToMany(mappedBy = "hospital")
-//    Set<HospitalVaccine> hospitalVaccines;
 	
 }
