@@ -61,8 +61,8 @@ public class DoctorController {
 	}
 
 	@GetMapping("/{id}")
-	public Doctor getDoctorById(@PathVariable long id) {
-		return doctorService.getDoctorById(id);
+	public DoctorDto getDoctorById(@PathVariable long id) {
+		return doctorService.getDoctorByIdWithSpecialization(id);
 	}
 
 	@GetMapping("/specialization")

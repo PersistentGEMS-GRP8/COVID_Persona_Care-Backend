@@ -35,8 +35,16 @@ public class DoctorService extends PersonService<Doctor> {
 		return doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", id));
 	}
 
+	public DoctorDto getDoctorByIdWithSpecialization(long id) {
+		return doctorRepository.findDoctorWithSpecializationById(id);
+	}
+
 	public Doctor updateDoctor(Doctor doctor) {
 		Doctor existDoc = getDoctorById(doctor.getId());
+		Doctor existByEmail = doctorRepository.findByEmail(doctor.getEmail());
+		if (existByEmail != null && existDoc.getId() != existByEmail.getId())
+			throw new InvalidDataException("Email already exists");
+
 		doctor.setUserId(existDoc.getUserId());
 		doctor.setSpecialization(existDoc.getSpecialization());
 		return doctorRepository.save(doctor);
