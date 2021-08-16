@@ -15,6 +15,7 @@ public class ProfileService {
 	private final ManagerService managerService;
 	private final ReceptionistService receptionistService;
 	private final DoctorService doctorService;
+	private final PatientServiceImpl patientService;
 
 	public Person getPersonData(long id, String role) {
 
@@ -33,6 +34,9 @@ public class ProfileService {
 
 		if (role.equals(Roles.ROLE_DOCTOR.toString()))
 			return doctorService.getPersonByUserId(id);
+		
+		if(role.equals(Roles.ROLE_PATIENT.toString()))
+			return patientService.getPersonByUserId(id);
 
 		return null;
 

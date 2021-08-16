@@ -43,6 +43,10 @@ public class JwtUtil {
 		if (roles.contains(new SimpleGrantedAuthority("ROLE_DOCTOR"))) {
 			claims.put("isDoctor", true);
 		}
+		
+		if (roles.contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+			claims.put("isPatient", true);
+		}
 
 		claims.put("userId", userId);
 
@@ -80,6 +84,7 @@ public class JwtUtil {
 		Boolean isHospitalAdmin = claims.get("isHospitalAdmin", Boolean.class);
 		Boolean isManager = claims.get("isManager", Boolean.class);
 		Boolean isDoctor = claims.get("isDoctor", Boolean.class);
+		Boolean isPatient = claims.get("isPatient", Boolean.class);
 
 		if (isAdmin != null && isAdmin) {
 			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
@@ -93,6 +98,10 @@ public class JwtUtil {
 		
 		if (isDoctor != null && isDoctor) {
 			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_DOCTOR"));
+		}
+		
+		if (isPatient != null && isPatient) {
+			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_PATIENT"));
 		}
 		
 		userId = claims.get("userId", Long.class);
