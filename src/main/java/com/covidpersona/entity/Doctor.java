@@ -33,7 +33,7 @@ import lombok.ToString;
 @NamedNativeQuery(name = "find_doctor_hospital", query = "select d.id as id, d.name as name, d.email as email, d.contact_no as contactNo, sp.id as specializationId, sp.name as specialization from hospital_doctors hd"
 		+ " inner join hospital h on hd.hospital_id = h.h_id" + " inner join doctors d on hd.doctor_id = d.id"
 		+ " inner join specializations sp on sp.id = d.specialization_id"
-		+ " where hd.hospital_id = :hId", resultSetMapping = "doctor_dto")
+		+ " where hd.hospital_id = ?1 and d.name like '%' ?2 '%'", resultSetMapping = "doctor_dto")
 @SqlResultSetMapping(name = "doctor_dto", classes = @ConstructorResult(targetClass = DoctorDto.class, columns = {
 		@ColumnResult(name = "id", type = Long.class), @ColumnResult(name = "name", type = String.class),
 		@ColumnResult(name = "email", type = String.class), @ColumnResult(name = "contactNo", type = String.class),

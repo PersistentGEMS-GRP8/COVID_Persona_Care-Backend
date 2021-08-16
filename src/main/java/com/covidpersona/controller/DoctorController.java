@@ -2,6 +2,7 @@ package com.covidpersona.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class DoctorController {
 	private final PersonaUserService personaUserService;
 
 	@PostMapping("/{specializationId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public long addDoctor(@PathVariable long specializationId, @RequestBody RegisterRequestDto doctor) {
 		Doctor doc = (Doctor) doctor.getPerson();
 		Specialization specialization = specializationService.getSpecialization(specializationId);
@@ -46,21 +48,30 @@ public class DoctorController {
 	@GetMapping
 	public List<DoctorDto> getAllDoctor(@RequestParam(required = false) String name,
 			@RequestParam(required = false) Integer hosId) {
-
+		if (name != null && hosId != null)
+			return doctorService.getAllDoctorByHospital(hosId, name);
+		
 		if (name != null)
 			return doctorService.getAllDoctorByNameLike(name);
 
 		if (hosId != null)
-			return doctorService.getAllDoctorByHospital(hosId);
+			return doctorService.getAllDoctorByHospital(hosId, "");
+
 		return doctorService.getAllDoctor();
 	}
 
 	@GetMapping("/{id}")
-	public Doctor getDoctorById(@PathVariable long id) {
-		return doctorService.getDoctorById(id);
+	public DoctorDto getDoctorById(@PathVariable long id) {
+		return doctorService.getDoctorByIdWithSpecialization(id);
+	}
+
+	@GetMapping("/specialization")
+	public List<Doctor> getDoctorBySpecialization(@RequestParam Long id) {
+		return doctorService.getAllDoctorBySpecialization(id);
 	}
 
 	@PutMapping("/{hospitalId}/{doctorId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public void addDoctorToHospital(@PathVariable int hospitalId, @PathVariable long doctorId) {
 		Hospital hospital = hospitalService.getHospital(hospitalId)
 				.orElseThrow(() -> new ResourceNotFoundException("Hospital", "id", hospitalId));
@@ -72,6 +83,7 @@ public class DoctorController {
 	}
 
 	@DeleteMapping("/{hospitalId}/{doctorId}")
+	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	public void deleteDoctorToHospital(@PathVariable int hospitalId, @PathVariable long doctorId) {
 		Hospital hospital = hospitalService.getHospital(hospitalId)
 				.orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", hospitalId));
@@ -80,5 +92,11 @@ public class DoctorController {
 		hospital.removeDoctor(doctor);
 
 		hospitalService.updateHospital(hospital);
+	}
+
+	@PutMapping
+	@PreAuthorize("hasRole('ROLE_DOCTOR')")
+	public Doctor updateDoctor(@RequestBody Doctor doctor) {
+		return doctorService.updateDoctor(doctor);
 	}
 }
