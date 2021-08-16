@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class HospitalVaccine {
 	private long id;
 	
 	@Column(nullable = false)
+	@Min(value=0)
 	private int count;
 	
 	@Column(nullable = false)
@@ -31,11 +33,5 @@ public class HospitalVaccine {
 	@Column(nullable = false)
 	private int vaccineId;
 	
-//	@ManyToOne
-//    @JoinColumn(name = "hospital_id")
-//    Hospital hospital;
-//	
-//	@ManyToOne
-//    @JoinColumn(name = "vaccine_id")
-//    Vaccine vaccine;
+
 }
