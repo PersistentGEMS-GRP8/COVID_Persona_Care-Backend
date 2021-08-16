@@ -29,9 +29,11 @@ public class HospitalAdminService extends PersonService<HospitalAdmin> {
 		return savedHospAdmin;
 	}
 
-	public HospitalAdmin updateHospAdmin(HospitalAdmin hospAdmin) {
-		HospitalAdmin updatedHospAdmin = hospAdminRepository.save(hospAdmin);
-		return updatedHospAdmin;
+	public HospitalAdmin updateHospAdmin(HospitalAdmin hospAdmin) {   
+	        Optional<HospitalAdmin> existHAdmin = getHospAdmin(hospAdmin.getId());
+	        hospAdmin.setUserId(existHAdmin.get().getUserId());
+	        HospitalAdmin updatedHospAdmin = hospAdminRepository.save(hospAdmin);
+	        return updatedHospAdmin;
 	}
 
 	public void deleteHospAdmin(long id) {
