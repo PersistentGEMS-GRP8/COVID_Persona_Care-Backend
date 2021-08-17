@@ -1,7 +1,5 @@
 package com.covidpersona.controller;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,9 +48,9 @@ public class ManagerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Manager> addManager(@RequestBody Manager manager) throws URISyntaxException {
+	public ResponseEntity<Manager> addManager(@RequestBody Manager manager) {
 		Manager savedManager = managerService.addManager(manager);
-		return ResponseEntity.created(new URI("/managers/" + savedManager.getId())).body(savedManager);
+		return ResponseEntity.ok(savedManager);
 	}
 
 	@PutMapping
