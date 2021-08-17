@@ -10,6 +10,7 @@ import com.covidpersona.entity.Hospital;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Integer>{
 	
+	//To check if there are existing hospitals
 	@Query("SELECT p FROM Hospital p WHERE LOWER(p.hName) = LOWER(:hName)")
 	Hospital findHospitalByHName(@Param("hName") String hName);
 
