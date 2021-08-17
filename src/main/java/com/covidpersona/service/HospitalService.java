@@ -12,10 +12,10 @@ import com.covidpersona.repository.HospitalRepository;
 
 @Service
 public class HospitalService {
-	
+
 	@Autowired
 	private HospitalRepository hospitalRepository;
-	
+
 	public List<Hospital> getHospitals() {
 		return hospitalRepository.findAll();
 	}
@@ -25,10 +25,10 @@ public class HospitalService {
 	}
 
 	public Hospital addHospital(Hospital hospital) {
-		 Hospital oldHospital = hospitalRepository.findHospitalByHName(hospital.gethName());
-	        if (oldHospital != null){
-	            throw new InvalidDataException("Hospital already exists");
-	        }
+		Hospital oldHospital = hospitalRepository.findHospitalByHName(hospital.gethName());
+		if (oldHospital != null) {
+			throw new InvalidDataException("Hospital already exists");
+		}
 		Hospital savedHospital = hospitalRepository.save(hospital);
 		return savedHospital;
 	}
@@ -47,18 +47,15 @@ public class HospitalService {
 //		return null;
 //	}
 
-	
 	public Hospital getHospitalByName(String name) {
 		return hospitalRepository.findByName(name);
 	}
 
-	public Hospital updateBeds(int hId,int beds) {
-		Hospital previous= hospitalRepository.findById(hId).get();
+	public Hospital updateBeds(int hId, int beds) {
+		Hospital previous = hospitalRepository.findById(hId).get();
 		previous.setNoOfBeds(beds);
 		Hospital updatedHospital = hospitalRepository.save(previous);
 		return updatedHospital;
 	}
+
 }
-
-
-

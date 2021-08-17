@@ -1,7 +1,5 @@
 package com.covidpersona.controller;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.covidpersona.dto.RegisterRequestDto;
 import com.covidpersona.entity.Manager;
 import com.covidpersona.service.ManagerService;
+import com.covidpersona.service.auth.PersonaUserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,6 +28,9 @@ public class ManagerController {
 
 	@Autowired
 	private ManagerService managerService;
+	
+	@Autowired
+	private PersonaUserService personaUserService;
 
 	@GetMapping
 	public List<Manager> getManagers() {
@@ -45,9 +48,9 @@ public class ManagerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Manager> addManager(@RequestBody Manager manager) throws URISyntaxException {
+	public ResponseEntity<Manager> addManager(@RequestBody Manager manager) {
 		Manager savedManager = managerService.addManager(manager);
-		return ResponseEntity.created(new URI("/managers/" + savedManager.getId())).body(savedManager);
+		return ResponseEntity.ok(savedManager);
 	}
 
 	@PutMapping
@@ -65,5 +68,10 @@ public class ManagerController {
 	@GetMapping("/getByHId/{hId}")
 	public List<Manager> getManagersByHId(@PathVariable int hId) {
 		return managerService.getManagersByHId(hId);
+	}
+	
+	@PostMapping("/register")
+	public long registerManager(@RequestBody RegisterRequestDto dto) {
+		return personaUserService.RegisterPersonaUser(dto.getPersonaUser(), dto.getPerson());
 	}
 }

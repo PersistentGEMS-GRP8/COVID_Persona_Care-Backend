@@ -2,11 +2,15 @@ package com.covidpersona.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
@@ -16,7 +20,21 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @Type(value = Admin.class, name = "admin"), @Type(value = HospitalAdmin.class, name = "hospitalAdmin"),
+		@Type(value = Manager.class, name = "manager"), @Type(value = Doctor.class, name = "doctor"),
+		@Type(value = Receptionist.class, name = "receptionist"), @Type(value = Patient.class, name = "patient") })
 public abstract class Person {
 
 	@Id
@@ -47,6 +65,11 @@ public abstract class Person {
 	@UpdateTimestamp
 	@Column(name = "updated_at", nullable = false)
 	private Date updatedAt;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", unique = true)
+	@JsonIgnore
+	private PersonaUser userId;
 
 	public long getId() {
 		return id;
@@ -94,6 +117,14 @@ public abstract class Person {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public PersonaUser getUserId() {
+		return userId;
+	}
+
+	public void setUserId(PersonaUser userId) {
+		this.userId = userId;
 	}
 
 }
