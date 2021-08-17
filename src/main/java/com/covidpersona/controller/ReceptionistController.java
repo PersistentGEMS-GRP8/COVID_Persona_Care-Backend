@@ -1,7 +1,5 @@
 package com.covidpersona.controller;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,9 +48,9 @@ public class ReceptionistController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Receptionist> addReceptionist(@RequestBody Receptionist receptionist) throws URISyntaxException {
+	public ResponseEntity<Receptionist> addReceptionist(@RequestBody Receptionist receptionist) {
 		Receptionist savedReceptionist = receptionistService.addReceptionist(receptionist);
-		return ResponseEntity.created(new URI("/receptionists/" + savedReceptionist.getId())).body(savedReceptionist);
+		return ResponseEntity.ok(savedReceptionist);
 	}
 
 	@PutMapping
