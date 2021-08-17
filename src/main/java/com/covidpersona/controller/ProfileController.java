@@ -21,7 +21,6 @@ public class ProfileController {
 
 	@GetMapping
 	public Person getPersonInfo() {
-		System.out.println(jwtUtil.getUserId() + " "+ jwtUtil.getRoles().get(0).toString());
 		return profileService.getPersonData(jwtUtil.getUserId(), jwtUtil.getRoles().get(0).toString());
 	}
 }

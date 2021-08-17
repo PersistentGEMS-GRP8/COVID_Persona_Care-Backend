@@ -11,7 +11,7 @@ import com.covidpersona.repository.PatientRepository;
 
 @Service
 @Primary
-public class PatientServiceImpl implements PatientService {
+public class PatientServiceImpl extends PersonService<Patient> implements PatientService {
 
 	@Autowired
 	private PatientRepository patientRepository;
@@ -46,6 +46,12 @@ public class PatientServiceImpl implements PatientService {
 	public Patient getPatientById(long id) {
 		return patientRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Receptionist", "user_id", id));
+	}
+
+	@Override
+	public Patient getPersonByUserId(long id) {
+		return patientRepository.findByUserId_Id(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Patient", "user_id", id));
 	}
 
 }
