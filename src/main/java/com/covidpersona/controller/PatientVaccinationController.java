@@ -50,7 +50,7 @@ public class PatientVaccinationController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<PatientVaccination> updateManager(@RequestBody PatientVaccination patientVaccination) {
+	public ResponseEntity<PatientVaccination> updatePatientVaccination(@RequestBody PatientVaccination patientVaccination) {
 		PatientVaccination updatedVaccination = patientVaccinationService.updatePatientVaccination(patientVaccination);
 		return ResponseEntity.ok(updatedVaccination);
 	}
