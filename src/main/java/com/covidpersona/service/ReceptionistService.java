@@ -30,6 +30,8 @@ public class ReceptionistService extends PersonService<Receptionist> {
 	}
 
 	public Receptionist updateReceptionist(Receptionist receptionist) {
+		Optional<Receptionist> existReceptionist = getReceptionist(receptionist.getId());
+		receptionist.setUserId(existReceptionist.get().getUserId());
 		Receptionist updatedReceptionist = receptionistRepository.save(receptionist);
 		return updatedReceptionist;
 	}

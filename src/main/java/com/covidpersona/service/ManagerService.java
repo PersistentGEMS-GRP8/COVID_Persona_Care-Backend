@@ -30,6 +30,8 @@ public class ManagerService extends PersonService<Manager> {
 	}
 
 	public Manager updateManager(Manager manager) {
+		Optional<Manager> existManager = getManager(manager.getId());
+		manager.setUserId(existManager.get().getUserId());
 		Manager updatedManager = managerRepository.save(manager);
 		return updatedManager;
 	}
