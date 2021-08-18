@@ -10,6 +10,7 @@ import com.covidpersona.entity.HospitalVaccine;
 
 public interface HospitalVaccineRepository extends JpaRepository<HospitalVaccine, Long>{
 
+	
 	@Query("select new com.covidpersona.dto.VaccineDto( hv.id as id,v.id as vaccineId, v.name,hv.count) from HospitalVaccine hv, Vaccine v where hv.vaccineId=v.id and hv.hospitalId=?1")
 	List<VaccineDto> findAllVaccinesInHospital(int hId);
 

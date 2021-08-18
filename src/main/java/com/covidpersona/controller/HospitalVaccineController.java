@@ -39,8 +39,9 @@ public class HospitalVaccineController {
 	}
 	
 	@PostMapping
-	public HospitalVaccine addVaccineToHospital(@Valid @RequestBody HospitalVaccine vaccineToHospital) {
-		return hospVaccineService.addVaccinesToHospital(vaccineToHospital);
+	public ResponseEntity<HospitalVaccine> addVaccineToHospital(@Valid @RequestBody HospitalVaccine vaccineToHospital) {
+		HospitalVaccine saveVaccine= hospVaccineService.addVaccinesToHospital(vaccineToHospital);
+		return ResponseEntity.ok(saveVaccine);
 	}
 	
 	@PutMapping
