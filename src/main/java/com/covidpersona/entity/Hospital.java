@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,7 +26,7 @@ public class Hospital {
 	private int hId;
 
 	@NotBlank
-	@Column(name = "h_name", nullable = false, unique=true)
+	@Column(nullable = false, unique = true)
 	private String hName;
 	
 	@NotBlank
@@ -91,4 +92,5 @@ public class Hospital {
 		doctor.getHospitals().remove(this);
 	}
 
+	
 }

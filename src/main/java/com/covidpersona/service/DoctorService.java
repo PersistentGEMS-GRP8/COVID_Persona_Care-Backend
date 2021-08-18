@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.covidpersona.dto.DoctorDto;
 import com.covidpersona.entity.Doctor;
+import com.covidpersona.exception.InvalidDataException;
 import com.covidpersona.exception.ResourceNotFoundException;
 import com.covidpersona.repository.DoctorRepository;
 
@@ -15,8 +16,11 @@ public class DoctorService extends PersonService<Doctor> {
 	@Autowired
 	private DoctorRepository doctorRepository;
 
-	public Doctor addDoctor(Doctor doctor) {
-		return doctorRepository.save(doctor);
+	public long addDoctor(Doctor doctor) {
+		Doctor existDoc = doctorRepository.findByEmail(doctor.getEmail());
+		if (existDoc != null)
+			throw new InvalidDataException("Email already exists");
+		return doctorRepository.save(doctor).getId();
 	}
 
 	public List<DoctorDto> getAllDoctor() {
@@ -31,19 +35,27 @@ public class DoctorService extends PersonService<Doctor> {
 		return doctorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", id));
 	}
 
-	/*
-	 * public List<Doctor> getDoctorBySpecialization(long id) { return
-	 * doctorRepository.findBySpecialization(null); }
-	 */
+	public DoctorDto getDoctorByIdWithSpecialization(long id) {
+		return doctorRepository.findDoctorWithSpecializationById(id);
+	}
 
 	public Doctor updateDoctor(Doctor doctor) {
-		doctorRepository.findById(doctor.getId())
-				.orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", doctor.getId()));
+		Doctor existDoc = getDoctorById(doctor.getId());
+		Doctor existByEmail = doctorRepository.findByEmail(doctor.getEmail());
+		if (existByEmail != null && existDoc.getId() != existByEmail.getId())
+			throw new InvalidDataException("Email already exists");
+
+		doctor.setUserId(existDoc.getUserId());
+		doctor.setSpecialization(existDoc.getSpecialization());
 		return doctorRepository.save(doctor);
 	}
 
-	public List<DoctorDto> getAllDoctorByHospital(int hosId) {
-		return doctorRepository.findAllWithSpecializationByHospital(hosId);
+	public List<DoctorDto> getAllDoctorByHospital(int hosId, String name) {
+		return doctorRepository.findAllWithSpecializationByHospital(hosId, name);
+	}
+
+	public List<Doctor> getAllDoctorBySpecialization(long specializationId) {
+		return doctorRepository.findBySpecialization_id(specializationId);
 	}
 
 	@Override
