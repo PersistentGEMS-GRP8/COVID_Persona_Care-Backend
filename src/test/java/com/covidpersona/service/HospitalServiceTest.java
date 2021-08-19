@@ -57,7 +57,6 @@ public class HospitalServiceTest {
 		verify(hospitalRepository).findAll();
 		}
 	
-	
 	//Test Delete Hospital
 	@Test
 	public void whenGivenId_shouldDeleteHospital_ifFound(){
@@ -68,9 +67,4 @@ public class HospitalServiceTest {
 		hospitalService.deleteHospital(hospital.gethId());
 		verify(hospitalRepository).deleteById(hospital.gethId());
 		}
-	
-	
-	
-
-
 }

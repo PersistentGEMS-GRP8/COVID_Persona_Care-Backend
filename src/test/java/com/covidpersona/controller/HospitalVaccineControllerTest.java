@@ -1,43 +1,44 @@
 package com.covidpersona.controller;
 
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
 import com.covidpersona.config.auth.JwtAuthenticationEntryPoint;
 import com.covidpersona.config.auth.JwtUtil;
-import com.covidpersona.entity.Vaccine;
+import com.covidpersona.dto.VaccineDto;
+import com.covidpersona.entity.HospitalVaccine;
+import com.covidpersona.service.HospitalVaccineService;
 import com.covidpersona.service.VaccineService;
 import com.covidpersona.service.auth.CustomUserDetailsService;
 import com.covidpersona.service.auth.PersonaUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(VaccineController.class)
-public class VaccineControllerTest {
-	
+@WebMvcTest(HospitalVaccineController.class)
+public class HospitalVaccineControllerTest {
+
+
 	@Autowired
 	private MockMvc mockMvc;
+	
 	@MockBean
-	private VaccineService service;
+	private HospitalVaccineService hospVaccineService;
 	
 	@MockBean
     private CustomUserDetailsService customUserDetailsService;
@@ -55,24 +56,20 @@ public class VaccineControllerTest {
     @Autowired
     ObjectMapper mapper;
     
-	Vaccine RECORD_1=new Vaccine(1L,"Pfizer");
-	Vaccine RECORD_2=new Vaccine(2L,"sinopharm");
-
-	
+    HospitalVaccine RECORD_1 = new HospitalVaccine(1L,3000,1,1);
+    
+    @Test
+    public void deleteVaccineById_whenDeleteMethod() throws Exception {
+    	 doNothing().when(hospVaccineService).deleteVaccine(RECORD_1.getId());
+         mockMvc.perform(delete("/vaccinesInHospital/" + Long.toString(RECORD_1.getId()))
+                 .contentType(MediaType.APPLICATION_JSON))
+                 .andExpect(status().isOk());
+    }
+    
 	@Test
-	public void getAllVaccine_success() throws Exception {
-	    List<Vaccine> vaccines = new ArrayList<>(Arrays.asList(RECORD_1, RECORD_2));    
-	    Mockito.when(service.getVaccines()).thenReturn(vaccines);    
-	    mockMvc.perform(MockMvcRequestBuilders
-	            .get("/vaccines")
-	            .contentType(MediaType.APPLICATION_JSON))
-	            .andExpect(status().isOk());
-	}
-	
-	@Test
-	public void addVaccine_whenPostMethod() throws Exception {		
-		given(service.addVaccine(RECORD_1)).willReturn(RECORD_1);	
-		mockMvc.perform(post("/vaccines")
+	public void addHospVaccine_whenPostMethod() throws Exception {		
+		given(hospVaccineService.addVaccinesToHospital(RECORD_1)).willReturn(RECORD_1);	
+		mockMvc.perform(post("/vaccinesInHospital")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsBytes(RECORD_1)))
                 .andExpect(status().isOk());
