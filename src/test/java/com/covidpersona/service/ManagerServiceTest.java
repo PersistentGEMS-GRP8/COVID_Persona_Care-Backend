@@ -104,7 +104,7 @@ public class ManagerServiceTest {
 		manager.setName("Test Name");
 		manager.setId(1L);
 		
-		when(managerRepository.findById(manager.getId())).thenReturn(Optional.of(manager));
+//		when(managerRepository.findById(manager.getId())).thenReturn(Optional.of(manager));
 		
 		managerService.deleteManager(manager.getId());
 		
