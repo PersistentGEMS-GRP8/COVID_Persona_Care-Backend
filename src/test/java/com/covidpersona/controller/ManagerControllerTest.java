@@ -101,6 +101,7 @@ public class ManagerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name", is(manager.get().getName())));
+
     }
 	
 	@Test

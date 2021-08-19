@@ -73,10 +73,10 @@ public class HospitalVaccineServiceTest {
 //		hospVaccine.setCount(500);
 //		hospVaccine.setHospitalId(1);
 //		hospVaccine.setVaccineId(1);
-//		when(hospitalVaccineRepo.save(ArgumentMatchers.any(HospitalVaccine.class))).thenReturn(hospVaccine);
+//		when(hospitalVaccineRepository.save(ArgumentMatchers.any(HospitalVaccine.class))).thenReturn(hospVaccine);
 //		HospitalVaccine created = hospitalVaccineService.addVaccinesToHospital(hospVaccine);
 //		assertThat(created.getCount()).isSameAs(hospVaccine.getCount());
-//		verify(hospitalVaccineRepo).save(hospVaccine);
+//		verify(hospitalVaccineRepository).save(hospVaccine);
 //	}
 	
 //	@Test

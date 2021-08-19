@@ -21,11 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.covidpersona.entity.Hospital;
 import com.covidpersona.service.HospitalService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @CrossOrigin(origins={ "http://localhost:3000" })
 @RestController
 @RequestMapping("/hospitals")
 public class HospitalController {
+	
+	private final Logger log = LoggerFactory.getLogger(HospitalController.class);
 	
 	@Autowired
 	private HospitalService hospitalService;
@@ -47,29 +51,34 @@ public class HospitalController {
 
 	@PostMapping
 	public ResponseEntity<Hospital> addHospital(@RequestBody Hospital hospital) throws URISyntaxException {
+		log.info("Request to create hospital: {}", hospital);
 		Hospital savedHospital =hospitalService.addHospital(hospital);
 		return ResponseEntity.ok(savedHospital);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Hospital> updateHospital(@RequestBody Hospital hospital) {
+		log.info("Request to update hospital: {}", hospital);
 		Hospital updatedHospital = hospitalService.updateHospital(hospital);
 		return ResponseEntity.ok(updatedHospital);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteHospital(@PathVariable int id) {
+		log.info("Request to delete hospital: {}", id);
 		hospitalService.deleteHospital(id);
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/search")
 	public Hospital getHospitalsByName(@RequestParam String name) {
+		log.info("Request to get hospital by name: {}", name);
 		return hospitalService.getHospitalByName(name);
 	
 	}
 	@PutMapping("/manage_beds")
 	public ResponseEntity<Hospital> manageBeds(@RequestParam int hId,@RequestParam int beds) {
+		log.info("Request to update hospitalbeds: {}", hId, beds);
 		Hospital updatedHospital = hospitalService.updateBeds(hId,beds);
 		return ResponseEntity.ok(updatedHospital);
 	}
