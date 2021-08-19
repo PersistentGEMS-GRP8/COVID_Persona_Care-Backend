@@ -34,7 +34,6 @@ import com.covidpersona.service.auth.PersonaUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-
 @RunWith(SpringRunner.class)
 @WebMvcTest(ManagerController.class)
 public class ManagerControllerTest {
