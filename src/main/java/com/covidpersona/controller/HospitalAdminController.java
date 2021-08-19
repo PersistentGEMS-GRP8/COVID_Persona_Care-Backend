@@ -4,6 +4,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,21 +33,22 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class HospitalAdminController {
 	
+	private final Logger log = LoggerFactory.getLogger(HospitalAdminController.class);
 
 	@Autowired
-//	private HospitalAdminService hospAdminService;
-//	private PersonaUserService personaUserService;
 	private final HospitalAdminService hospAdminService;
 	private final PersonaUserService personaUserService;
 
 
 	@GetMapping
 	public List<HospitalAdmin> getHospAdmins() {
+		log.info("Request to get hospital admins");
 		return hospAdminService.getHospAdmins();
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getHospAdmin(@PathVariable long id) {
+		log.info("Request to get hospital admin by id "+id);
 		Optional<HospitalAdmin> hospAdmin = hospAdminService.getHospAdmin(id);
 		if (hospAdmin.isPresent()) {
 			return ResponseEntity.ok(hospAdmin);
@@ -57,18 +60,21 @@ public class HospitalAdminController {
 	
 	@PostMapping
 	public long addHospAdmin(@RequestBody RegisterRequestDto hospAdmin) throws URISyntaxException {
+		log.info("Request to add hospital admin "+hospAdmin);
 		HospitalAdmin hAdmin = (HospitalAdmin) hospAdmin.getPerson();
 		return personaUserService.RegisterPersonaUser(hospAdmin.getPersonaUser(),hAdmin);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<HospitalAdmin> updateHospAdmin(@RequestBody HospitalAdmin hospAdmin) {
+		log.info("Request to update hospital admin "+hospAdmin);
 		HospitalAdmin updatedHospAdmin = hospAdminService.updateHospAdmin(hospAdmin);
 		return ResponseEntity.ok(updatedHospAdmin);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteHospAdmin(@PathVariable long id) {
+		log.info("Request to delete hospital admin "+id);
 		hospAdminService.deleteHospAdmin(id);
 		return ResponseEntity.ok().build();
 	}
