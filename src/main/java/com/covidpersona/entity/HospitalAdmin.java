@@ -2,7 +2,14 @@ package com.covidpersona.entity;
 
 import javax.persistence.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class HospitalAdmin extends Person {
 	
 	private int hId;
