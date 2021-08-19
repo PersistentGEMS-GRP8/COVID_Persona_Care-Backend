@@ -50,7 +50,7 @@ public class DoctorController {
 			@RequestParam(required = false) Integer hosId) {
 		if (name != null && hosId != null)
 			return doctorService.getAllDoctorByHospital(hosId, name);
-		
+
 		if (name != null)
 			return doctorService.getAllDoctorByNameLike(name);
 
