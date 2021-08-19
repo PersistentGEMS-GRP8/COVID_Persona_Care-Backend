@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ReceptionistController.class)
+@WithMockUser(username = "test", password = "test", roles = "HOSPITALADMIN")
 public class ReceptionistControllerTest {
 
 	@MockBean
@@ -98,22 +100,22 @@ public class ReceptionistControllerTest {
 
         mockMvc.perform(get("/receptionists/" + Long.toString(receptionist.get().getId()))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-//                .andExpect(jsonPath("name", is(receptionist.get().getName())));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name", is(receptionist.get().getName())));
     }
 	
-//	@Test
-//    public void sendNotFoundStatus_whenReceptionistDoestExist() throws Exception {
-//		Optional<Receptionist> receptionist = Optional.of(new Receptionist());
-//		receptionist.get().setName("Test Name");
-//		receptionist.get().setId(22L);
-//
-//        given(receptionistService.getReceptionist(receptionist.get().getId())).willReturn(Optional.empty());
-//
-//        mockMvc.perform(get("/receptionists/" + Long.toString(receptionist.get().getId()))
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isNotFound());
-//    }
+	@Test
+    public void sendNotFoundStatus_whenReceptionistDoestExist() throws Exception {
+		Optional<Receptionist> receptionist = Optional.of(new Receptionist());
+		receptionist.get().setName("Test Name");
+		receptionist.get().setId(22L);
+
+        given(receptionistService.getReceptionist(receptionist.get().getId())).willReturn(Optional.empty());
+
+        mockMvc.perform(get("/receptionists/" + Long.toString(receptionist.get().getId()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 	
 	@Test
     public void listAllReceptionists_whenGetMethod() throws Exception {
@@ -129,9 +131,9 @@ public class ReceptionistControllerTest {
         mockMvc.perform(get("/receptionists")
                 .contentType(MediaType.APPLICATION_JSON))
         		.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(jsonPath("$[0].name", is(receptionist.getName())));
+                .andExpect(jsonPath("$[0].name", is(receptionist.getName())));
     }
 	
 	@Test
@@ -149,7 +151,7 @@ public class ReceptionistControllerTest {
         mockMvc.perform(get("/receptionists/getByHId/"+ Long.toString(receptionist.gethId()))
                 .contentType(MediaType.APPLICATION_JSON))
         		.andDo(print())
-                .andExpect(status().isOk());
-//                .andExpect(jsonPath("$[0].name", is(receptionist.getName())));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name", is(receptionist.getName())));
     }
 }
