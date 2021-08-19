@@ -29,6 +29,7 @@ import com.covidpersona.service.VaccineService;
 import com.covidpersona.service.auth.CustomUserDetailsService;
 import com.covidpersona.service.auth.PersonaUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(VaccineController.class)
@@ -58,21 +59,24 @@ public class VaccineControllerTest {
 	Vaccine RECORD_1=new Vaccine(1L,"Pfizer");
 	Vaccine RECORD_2=new Vaccine(2L,"sinopharm");
 
+	final String URL="/vaccines";
 	
 	@Test
-	public void getAllVaccine_success() throws Exception {
+	public void getAllVaccine_Test() throws Exception {
 	    List<Vaccine> vaccines = new ArrayList<>(Arrays.asList(RECORD_1, RECORD_2));    
 	    Mockito.when(service.getVaccines()).thenReturn(vaccines);    
 	    mockMvc.perform(MockMvcRequestBuilders
-	            .get("/vaccines")
+	            .get(URL)
 	            .contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isOk());
+//	            .andExpect(jsonPath("$", hasSize(2)));
+//              .andExpect(jsonPath("$[0].name", is(manager.getName())));
 	}
 	
 	@Test
-	public void addVaccine_whenPostMethod() throws Exception {		
+	public void addVaccine_Test() throws Exception {		
 		given(service.addVaccine(RECORD_1)).willReturn(RECORD_1);	
-		mockMvc.perform(post("/vaccines")
+		mockMvc.perform(post(URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsBytes(RECORD_1)))
                 .andExpect(status().isOk());
