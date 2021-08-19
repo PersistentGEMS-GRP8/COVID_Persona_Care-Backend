@@ -29,6 +29,7 @@ import com.covidpersona.service.VaccineService;
 import com.covidpersona.service.auth.CustomUserDetailsService;
 import com.covidpersona.service.auth.PersonaUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(VaccineController.class)
@@ -68,6 +69,8 @@ public class VaccineControllerTest {
 	            .get(URL)
 	            .contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isOk());
+//	            .andExpect(jsonPath("$", hasSize(2)));
+//              .andExpect(jsonPath("$[0].name", is(manager.getName())));
 	}
 	
 	@Test

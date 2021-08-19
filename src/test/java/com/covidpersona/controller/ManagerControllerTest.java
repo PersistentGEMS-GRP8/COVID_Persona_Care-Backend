@@ -98,7 +98,7 @@ public class ManagerControllerTest {
         mockMvc.perform(get("/managers/" + Long.toString(manager.get().getId()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-//                .andExpect(jsonPath("name", is(manager.get().getName())));
+ //               .andExpect(jsonPath("name", is(manager.get().getName())));
     }
 	
 //	@Test
