@@ -79,27 +79,27 @@ public class HospitalVaccineServiceTest {
 //		verify(hospitalVaccineRepository).save(hospVaccine);
 //	}
 	
-//	@Test
-//	public void whenGivenId_shouldUpdateVaccine_ifFound() {
-//		
-//		HospitalVaccine vaccine = new HospitalVaccine();
-//		vaccine.setId(1);
-//		vaccine.setCount(3500);
-//		vaccine.setHospitalId(1);
-//		vaccine.setVaccineId(1);
-//		
-//		HospitalVaccine updatedVaccine = new HospitalVaccine();
-//		updatedVaccine.setId(vaccine.getId());
-//		updatedVaccine.setCount(7000);
-//		updatedVaccine.setHospitalId(vaccine.getHospitalId());
-//		updatedVaccine.setVaccineId(vaccine.getHospitalId());
-//		
-//		given(hospitalVaccineRepository.findById(vaccine.getId())).willReturn(Optional.of(vaccine));
-//		 when(hospitalVaccineRepository.save(ArgumentMatchers.any(HospitalVaccine.class))).thenReturn(updatedVaccine);        
-//		HospitalVaccine expected= hospitalVaccineService.editVaccineInHospital(updatedVaccine);
-//		assertThat(expected).isSameAs(updatedVaccine);        
-//		verify(hospitalVaccineRepository).save(updatedVaccine);
-//		verify(hospitalVaccineRepository).findById(vaccine.getId());
-//	}
+	@Test
+	public void whenGivenId_shouldUpdateVaccine_ifFound() {
+		
+		HospitalVaccine vaccine = new HospitalVaccine();
+		vaccine.setId(1);
+		vaccine.setCount(3500);
+		vaccine.setHospitalId(1);
+		vaccine.setVaccineId(1);
+		
+		HospitalVaccine updatedVaccine = new HospitalVaccine();
+		updatedVaccine.setId(vaccine.getId());
+		updatedVaccine.setCount(7000);
+		updatedVaccine.setHospitalId(vaccine.getHospitalId());
+		updatedVaccine.setVaccineId(vaccine.getHospitalId());
+		
+		given(hospitalVaccineRepository.findById(vaccine.getId())).willReturn(Optional.of(vaccine));
+		 when(hospitalVaccineRepository.save(ArgumentMatchers.any(HospitalVaccine.class))).thenReturn(updatedVaccine);        
+		HospitalVaccine expected= hospitalVaccineService.editVaccineInHospital(updatedVaccine);
+		assertThat(expected).isSameAs(updatedVaccine);        
+		verify(hospitalVaccineRepository).save(updatedVaccine);
+	//	verify(hospitalVaccineRepository).findById(vaccine.getId());
+	}
 
 }
