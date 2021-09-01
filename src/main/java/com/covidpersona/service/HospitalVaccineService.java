@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.covidpersona.dto.VaccineDto;
 import com.covidpersona.entity.HospitalVaccine;
+import com.covidpersona.exception.ResourceNotFoundException;
 import com.covidpersona.repository.HospitalVaccineRepository;
 
 @Service
@@ -16,7 +17,8 @@ public class HospitalVaccineService {
 	private HospitalVaccineRepository hospVaccineRepo;
 	
 	public HospitalVaccine addVaccinesToHospital(HospitalVaccine vaccineToHosp) {
-		return hospVaccineRepo.save(vaccineToHosp);
+		HospitalVaccine savedVaccine= hospVaccineRepo.save(vaccineToHosp);
+		return savedVaccine;
 	}
 	
 	public List<VaccineDto> getAllVaccines(int hId){
@@ -28,10 +30,12 @@ public class HospitalVaccineService {
 	}
 	
 	public HospitalVaccine editVaccineInHospital(HospitalVaccine editedVaccine) {
-		return hospVaccineRepo.save(editedVaccine);
+		HospitalVaccine updatedVaccine= hospVaccineRepo.save(editedVaccine);
+		return updatedVaccine;
 	}
 	
 	public void deleteVaccine(long id) {
+		hospVaccineRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hospital Vaccine", "id", id));
 		hospVaccineRepo.deleteById(id);
 	}
 }

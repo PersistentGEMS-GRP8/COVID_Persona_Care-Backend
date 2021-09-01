@@ -27,7 +27,7 @@ public class SpecializationController {
 	private SpecializationService specializationService;
 	
 	@PostMapping
-	public Specialization addSpecialization(@RequestBody @Valid Specialization specialization) {
+	public Specialization addSpecialization(@Valid @RequestBody Specialization specialization) {
 		return specializationService.addSpecialization(specialization);
 	}
 	

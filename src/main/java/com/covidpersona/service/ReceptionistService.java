@@ -16,7 +16,7 @@ public class ReceptionistService extends PersonService<Receptionist> {
 	@Autowired
 	private ReceptionistRepository receptionistRepository;
 
-	public List<Receptionist> getReceptionist() {
+	public List<Receptionist> getReceptionists() {
 		return receptionistRepository.findAll();
 	}
 

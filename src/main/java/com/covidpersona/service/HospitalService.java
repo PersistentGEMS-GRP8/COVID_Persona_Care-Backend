@@ -34,18 +34,16 @@ public class HospitalService {
 	}
 
 	public Hospital updateHospital(Hospital hospital) {
-		Hospital updatedHospital = hospitalRepository.save(hospital);
-		return updatedHospital;
+		Hospital existHospital = getHospital(hospital.gethId()).get();
+        existHospital.sethName(hospital.gethName());
+        existHospital.setLocation(hospital.getLocation());
+        existHospital.setNoOfBeds(hospital.getNoOfBeds());
+        return hospitalRepository.save(existHospital);
 	}
 
 	public void deleteHospital(int id) {
 		hospitalRepository.deleteById(id);
 	}
-
-//	public Hospital addHospital(Hospital hospital, String gethName) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	public Hospital getHospitalByName(String name) {
 		return hospitalRepository.findByName(name);
